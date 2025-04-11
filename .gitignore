@@ -1,0 +1,51 @@
+# JUCE Builds
+Builds/
+*.jucer
+
+# Visual Studio build artifacts
+*.obj
+*.pdb
+*.ipch
+*.aps
+*.ilk
+*.exp
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+*.user
+*.suo
+*.sdf
+*.cache
+*.opensdf
+*.VC.db
+*.VC.VC.opendb
+*.dbmdl
+
+# VST3 Cache files
+*.vst3
+
+# Auto-generated files
+*.exe
+*.dll
+*.lib
+
+# Visual Studio folders
+.vs/
+Debug/
+Release/
+x64/
+x86/
+ARM/
+ARM64/
+
+# MacOS / Xcode builds (optional if cross-platform)
+*.DS_Store
+*.xcworkspace
+*.xcodeproj
+
+# Others
+*.bak
+*.tmp
+*.log
+*.sln.docstates

@@ -40,22 +40,9 @@ private:
     // juce::Slider exampleSlider;
     // juce::TextButton loadModelButton;
 
-    enum SignalType
-    {
-        Sine = 0,
-        Square,
-        Triangle,
-        Sawtooth
-    };
-
-    void timerCallback() override;
-    void updateWaveform();
-
-    std::vector<float> signalBuffer;
-    float time = 0.0f;
-    SignalType currentSignal = Sine;
-
-    juce::TextButton signalButtons[4];
+    SmartPedalAudioProcessor& processor;
+    void timerCallback() override {repaint();};
+    
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VanGUI)
 };

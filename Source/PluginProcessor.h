@@ -61,5 +61,8 @@ private:
     // An instance of Sonia's placeholder effects class
     SoniaEffects soniaEffects;
 
+    juce::AudioBuffer<float> scopeBuffer;
+    std::atomic<int> writePos = 0;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SmartPedalAudioProcessor)
 };

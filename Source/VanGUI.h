@@ -11,14 +11,15 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include <vector>
 
 /**
  * VanGUI
  * -------------------------
- * A placeholder class for Van’s GUI components and layout.
+ * A placeholder class for Vanâ€™s GUI components and layout.
  * Van can add knobs, sliders, or advanced visualization here.
  */
-class VanGUI : public juce::Component
+class VanGUI : public juce::Component, private juce::Timer
 {
 public:
     VanGUI();
@@ -38,6 +39,23 @@ private:
     // Example placeholders for GUI controls:
     // juce::Slider exampleSlider;
     // juce::TextButton loadModelButton;
+
+    enum SignalType
+    {
+        Sine = 0,
+        Square,
+        Triangle,
+        Sawtooth
+    };
+
+    void timerCallback() override;
+    void updateWaveform();
+
+    std::vector<float> signalBuffer;
+    float time = 0.0f;
+    SignalType currentSignal = Sine;
+
+    juce::TextButton signalButtons[4];
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VanGUI)
 };

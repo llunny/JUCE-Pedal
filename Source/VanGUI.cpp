@@ -40,45 +40,11 @@ void VanGUI::update()
 
 void VanGUI::paint(juce::Graphics& g)
 {
-  
-   g.fillAll(juce::Colours::black);
-    g.setColour(juce::Colours::lime);
+    g.fillAll(juce::Colours::darkgrey);
 
-    const auto& buffer = processor.getScopeBuffer();
-    const float* samples = buffer.getNumChannels() > 0 ? buffer.getReadPointer(0) : nullptr;
-    const int numSamples = buffer.getNumSamples();
-
-    const auto width = getWidth();
-    const auto height = getHeight();
-
-    juce::Path waveform;
-    waveform.startNewSubPath(0, height / 2);
-
-    const bool hasAudio = (samples != nullptr && numSamples > 0);
-
-    if (!hasAudio)
-    {
-        // Draw a flat horizontal line across the middle
-        waveform.startNewSubPath(0, height / 2);
-        waveform.lineTo(static_cast<float>(width), height / 2);
-
-        g.setColour(juce::Colours::darkgrey); // Or whatever color you want
-        g.strokePath(waveform, juce::PathStrokeType(2.0f));
-        return;
-    }
-
-
-    // Real audio waveform
-    for (int i = 0; i < numSamples; ++i)
-    {
-        float x = static_cast<float>(i) / numSamples * width;
-        float y = juce::jmap(samples[i], -1.0f, 1.0f, static_cast<float>(height), 0.0f);
-        waveform.lineTo(x, y);
-    }
-
-    g.strokePath(waveform, juce::PathStrokeType(2.0f));
-
-  
+    // Example placeholder text:
+    g.setColour(juce::Colours::white);
+    g.drawFittedText("Van's GUI Area", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void VanGUI::resized()
@@ -92,5 +58,4 @@ void VanGUI::timerCallback()
 {
     repaint(); // paints 60 fps
 }
-
 

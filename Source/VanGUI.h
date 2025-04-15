@@ -20,6 +20,11 @@
  * A placeholder class for Van’s GUI components and layout.
  * Van can add knobs, sliders, or advanced visualization here.
  */
+
+class SmartPedalAudioProcessor;
+ 
+
+
 class VanGUI : public juce::Component, private juce::Timer
 {
 public:
@@ -42,7 +47,11 @@ private:
     // juce::TextButton loadModelButton;
 
     SmartPedalAudioProcessor& processor;
-    void timerCallback() override {repaint();};
+    void timerCallback() override;
+
+
+    juce::AudioBuffer<float> fakeBuffer;
+    juce::int64 lastUpdateTime = 0;
     
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VanGUI)

@@ -95,6 +95,10 @@ void SmartPedalAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+
+        scopeBuffer.setSize(1, 1024);  // mono channel, 1024 samples
+        scopeBuffer.clear();
+        writePos = 0;
 }
 
 void SmartPedalAudioProcessor::releaseResources()

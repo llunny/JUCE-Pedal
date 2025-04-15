@@ -16,14 +16,14 @@
 //==============================================================================
 /**
 */
-class SmartPedalAudioProcessorEditor  : public juce::AudioProcessorEditor
+class SmartPedalAudioProcessorEditor : public juce::AudioProcessorEditor
 {
 public:
-    SmartPedalAudioProcessorEditor (SmartPedalAudioProcessor&);
+    SmartPedalAudioProcessorEditor(SmartPedalAudioProcessor&);
     ~SmartPedalAudioProcessorEditor() override;
 
     //==============================================================================
-    void paint (juce::Graphics&) override;
+    void paint(juce::Graphics&) override;
     void resized() override;
 
 private:
@@ -33,5 +33,5 @@ private:
 
     VanGUI vanGUI;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SmartPedalAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SmartPedalAudioProcessorEditor)
 };

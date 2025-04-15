@@ -12,17 +12,23 @@
 //==============================================================================
 SmartPedalAudioProcessor::SmartPedalAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
-     : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       )
+    : AudioProcessor(BusesProperties()
+#if ! JucePlugin_IsMidiEffect
+#if ! JucePlugin_IsSynth
+        .withInput("Input", juce::AudioChannelSet::stereo(), true)
+#endif
+        .withOutput("Output", juce::AudioChannelSet::stereo(), true)
+#endif
+    )
 #endif
 {
 }
+
+juce::AudioBuffer<float>& SmartPedalAudioProcessor::getScopeBuffer() /////////////////////////////////
+{
+    return scopeBuffer;
+}
+
 
 SmartPedalAudioProcessor::~SmartPedalAudioProcessor()
 {
@@ -36,29 +42,29 @@ const juce::String SmartPedalAudioProcessor::getName() const
 
 bool SmartPedalAudioProcessor::acceptsMidi() const
 {
-   #if JucePlugin_WantsMidiInput
+#if JucePlugin_WantsMidiInput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool SmartPedalAudioProcessor::producesMidi() const
 {
-   #if JucePlugin_ProducesMidiOutput
+#if JucePlugin_ProducesMidiOutput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool SmartPedalAudioProcessor::isMidiEffect() const
 {
-   #if JucePlugin_IsMidiEffect
+#if JucePlugin_IsMidiEffect
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 double SmartPedalAudioProcessor::getTailLengthSeconds() const
@@ -69,7 +75,7 @@ double SmartPedalAudioProcessor::getTailLengthSeconds() const
 int SmartPedalAudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
-                // so this should be at least 1, even if you're not really implementing programs.
+    // so this should be at least 1, even if you're not really implementing programs.
 }
 
 int SmartPedalAudioProcessor::getCurrentProgram()
@@ -77,28 +83,28 @@ int SmartPedalAudioProcessor::getCurrentProgram()
     return 0;
 }
 
-void SmartPedalAudioProcessor::setCurrentProgram (int index)
+void SmartPedalAudioProcessor::setCurrentProgram(int index)
 {
 }
 
-const juce::String SmartPedalAudioProcessor::getProgramName (int index)
+const juce::String SmartPedalAudioProcessor::getProgramName(int index)
 {
     return {};
 }
 
-void SmartPedalAudioProcessor::changeProgramName (int index, const juce::String& newName)
+void SmartPedalAudioProcessor::changeProgramName(int index, const juce::String& newName)
 {
 }
 
 //==============================================================================
-void SmartPedalAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void SmartPedalAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
 
-        scopeBuffer.setSize(1, 1024);  // mono channel, 1024 samples
-        scopeBuffer.clear();
-        writePos = 0;
+    scopeBuffer.setSize(1, 1024);  // mono channel, 1024 samples
+    scopeBuffer.clear();
+    writePos = 0;
 }
 
 void SmartPedalAudioProcessor::releaseResources()
@@ -108,35 +114,35 @@ void SmartPedalAudioProcessor::releaseResources()
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool SmartPedalAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool SmartPedalAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
 {
-  #if JucePlugin_IsMidiEffect
-    juce::ignoreUnused (layouts);
+#if JucePlugin_IsMidiEffect
+    juce::ignoreUnused(layouts);
     return true;
-  #else
+#else
     // This is the place where you check if the layout is supported.
     // In this template code we only support mono or stereo.
     // Some plugin hosts, such as certain GarageBand versions, will only
     // load plugins that support stereo bus layouts.
     if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
-     && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
+        && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
         return false;
 
     // This checks if the input layout matches the output layout
-   #if ! JucePlugin_IsSynth
+#if ! JucePlugin_IsSynth
     if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
         return false;
-   #endif
+#endif
 
     return true;
-  #endif
+#endif
 }
 #endif
 
-void SmartPedalAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void SmartPedalAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
+    auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     // In case we have more outputs than inputs, this code clears any output
@@ -146,7 +152,7 @@ void SmartPedalAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     // when they first compile a plugin, but obviously you don't need to keep
     // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
+        buffer.clear(i, 0, buffer.getNumSamples());
 
     // Call effects processing for buffer
     soniaEffects.process(buffer);
@@ -167,12 +173,12 @@ void SmartPedalAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     //     // ..do something to the data...
     // }
 
-     for (int i = 0; i < numSamples; ++i)
+    for (int i = 0; i < numSamples; ++i)
     {
         scopeBuffer.setSample(0, writePos % scopeBuffer.getNumSamples(), readPtr[i]);
         ++writePos;
     }
-  
+
 }
 
 //==============================================================================
@@ -183,18 +189,18 @@ bool SmartPedalAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* SmartPedalAudioProcessor::createEditor()
 {
-    return new SmartPedalAudioProcessorEditor (*this);
+    return new SmartPedalAudioProcessorEditor(*this);
 }
 
 //==============================================================================
-void SmartPedalAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+void SmartPedalAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
 }
 
-void SmartPedalAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void SmartPedalAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.

@@ -24,9 +24,11 @@ SmartPedalAudioProcessor::SmartPedalAudioProcessor()
 {
 }
 
-juce::AudioBuffer<float>& SmartPedalAudioProcessor::getScopeBuffer() /////////////////////////////////
+
+const juce::AudioBuffer<float>& SmartPedalAudioProcessor::getScopeBuffer()
 {
-    return scopeBuffer;
+    std::scoped_lock lock(scopeMutex);
+    return scopeSnapshot;
 }
 
 
@@ -102,9 +104,11 @@ void SmartPedalAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBl
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
 
-    scopeBuffer.setSize(1, 1024);  // mono channel, 1024 samples
+    scopeBuffer.setSize(1, 1024);
+    scopeSnapshot.setSize(1, 1024);
     scopeBuffer.clear();
-    writePos = 0;
+    scopeSnapshot.clear();
+    
 }
 
 void SmartPedalAudioProcessor::releaseResources()
@@ -173,10 +177,13 @@ void SmartPedalAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, ju
     //     // ..do something to the data...
     // }
 
-    for (int i = 0; i < numSamples; ++i)
+     for (int i = 0; i < numSamples; ++i){
+        scopeBuffer.setSample(0, i % scopeBuffer.getNumSamples(), readPtr[i]);
+     }
+
     {
-        scopeBuffer.setSample(0, writePos % scopeBuffer.getNumSamples(), readPtr[i]);
-        ++writePos;
+        std::scoped_lock lock(scopeMutex);
+        scopeSnapshot.makeCopyOf(scopeBuffer);
     }
 
 }

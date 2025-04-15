@@ -22,7 +22,7 @@ public:
     SmartPedalAudioProcessor();
     ~SmartPedalAudioProcessor() override;
 
-    juce::AudioBuffer<float>& getScopeBuffer();  //////////////////////////////////////////////////
+    const juce::AudioBuffer<float>& getScopeBuffer();
 
 
     //==============================================================================
@@ -64,8 +64,10 @@ private:
     // An instance of Sonia's placeholder effects class
     SoniaEffects soniaEffects;
 
-    juce::AudioBuffer<float> scopeBuffer;
-    std::atomic<int> writePos = 0;
+   juce::AudioBuffer<float> scopeBuffer;
+    juce::AudioBuffer<float> scopeSnapshot;
+    
+    std::mutex scopeMutex;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SmartPedalAudioProcessor)
 };

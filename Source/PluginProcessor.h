@@ -11,6 +11,8 @@
 #include <JuceHeader.h>
 
 #include "SoniaEffects.h"
+#include "ScopeDataCollector.h"
+
 
 //==============================================================================
 /**
@@ -58,15 +60,17 @@ public:
     void getStateInformation(juce::MemoryBlock& destData) override;
     void setStateInformation(const void* data, int sizeInBytes) override;
 
+    ScopeDataCollector scopeCollector;
+
 private:
     //==============================================================================
 
     // An instance of Sonia's placeholder effects class
     SoniaEffects soniaEffects;
 
-   juce::AudioBuffer<float> scopeBuffer;
+    juce::AudioBuffer<float> scopeBuffer;
     juce::AudioBuffer<float> scopeSnapshot;
-    
+
     std::mutex scopeMutex;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SmartPedalAudioProcessor)

@@ -15,7 +15,7 @@ VanGUI::VanGUI(SmartPedalAudioProcessor& p) : processor(p)
 {
 
     // Constructor: You can create child components here if you like.
-    startTimerHz(120);
+    startTimerHz(60);
 }
 
 VanGUI::~VanGUI()
@@ -40,11 +40,27 @@ void VanGUI::update()
 
 void VanGUI::paint(juce::Graphics& g)
 {
-    g.fillAll(juce::Colours::darkgrey);
+    g.fillAll(juce::Colours::black);
+    g.setColour(juce::Colours::lime);
 
-    // Example placeholder text:
-    g.setColour(juce::Colours::white);
-    g.drawFittedText("Van's GUI Area", getLocalBounds(), juce::Justification::centred, 1);
+    const auto& samples = processor.scopeCollector.getFifo();
+    const int numSamples = static_cast<int>(samples.size());
+
+
+    const auto width = getWidth();
+    const auto height = getHeight();
+
+    juce::Path waveform;
+    waveform.startNewSubPath(0, height / 2);
+
+    for (int i = 0; i < numSamples; ++i)
+    {
+        float x = static_cast<float>(i) / numSamples * width;
+        float y = juce::jmap(samples[i], -1.0f, 1.0f, static_cast<float>(height), 0.0f);
+        waveform.lineTo(x, y);
+    }
+
+    g.strokePath(waveform, juce::PathStrokeType(2.0f));
 }
 
 void VanGUI::resized()

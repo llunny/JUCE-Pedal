@@ -9,6 +9,7 @@
 */
 
 #include "VanGUI.h"
+#include "PluginProcessor.h"
 
 VanGUI::VanGUI(SmartPedalAudioProcessor& p) : processor(p)
 {

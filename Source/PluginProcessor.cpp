@@ -108,7 +108,7 @@ void SmartPedalAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBl
     scopeSnapshot.setSize(1, 1024);
     scopeBuffer.clear();
     scopeSnapshot.clear();
-    
+
 }
 
 void SmartPedalAudioProcessor::releaseResources()
@@ -145,6 +145,10 @@ bool SmartPedalAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts
 
 void SmartPedalAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+
+    scopeCollector.processBlock(buffer);
+
+
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
@@ -177,9 +181,9 @@ void SmartPedalAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, ju
     //     // ..do something to the data...
     // }
 
-     for (int i = 0; i < numSamples; ++i){
+    for (int i = 0; i < numSamples; ++i) {
         scopeBuffer.setSample(0, i % scopeBuffer.getNumSamples(), readPtr[i]);
-     }
+    }
 
     {
         std::scoped_lock lock(scopeMutex);

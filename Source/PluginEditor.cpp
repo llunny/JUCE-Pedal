@@ -30,11 +30,11 @@ SmartPedalAudioProcessorEditor::~SmartPedalAudioProcessorEditor()
 void SmartPedalAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    // g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
 
-    g.setColour (juce::Colours::white);
-    g.setFont (juce::FontOptions (15.0f));
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+    // g.setColour (juce::Colours::white);
+    // g.setFont (juce::FontOptions (15.0f));
+    // g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void SmartPedalAudioProcessorEditor::resized()
@@ -42,6 +42,9 @@ void SmartPedalAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 
-    vanGUI.setBounds(getLocalBounds().reduced(10));
+    vanGUI.setBounds(getLocalBounds());
+
+      // vanGUI.setBounds(getLocalBounds().reduced(10));
+
 
 }

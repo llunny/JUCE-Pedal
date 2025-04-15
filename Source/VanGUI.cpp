@@ -14,7 +14,7 @@ VanGUI::VanGUI(SmartPedalAudioProcessor& p) : processor(p)
 {
 
     // Constructor: You can create child components here if you like.
-    startTimerHz(60);
+    startTimerHz(120);
 }
 
 VanGUI::~VanGUI()
@@ -40,11 +40,11 @@ void VanGUI::update()
 void VanGUI::paint(juce::Graphics& g)
 {
   
-    g.fillAll(juce::Colours::darkgrey);
+   g.fillAll(juce::Colours::black);
     g.setColour(juce::Colours::lime);
 
     const auto& buffer = processor.getScopeBuffer();
-    const float* samples = buffer.getReadPointer(0);
+    const float* samples = buffer.getNumChannels() > 0 ? buffer.getReadPointer(0) : nullptr;
     const int numSamples = buffer.getNumSamples();
 
     const auto width = getWidth();
@@ -53,6 +53,21 @@ void VanGUI::paint(juce::Graphics& g)
     juce::Path waveform;
     waveform.startNewSubPath(0, height / 2);
 
+    const bool hasAudio = (samples != nullptr && numSamples > 0);
+
+    if (!hasAudio)
+    {
+        // Draw a flat horizontal line across the middle
+        waveform.startNewSubPath(0, height / 2);
+        waveform.lineTo(static_cast<float>(width), height / 2);
+
+        g.setColour(juce::Colours::darkgrey); // Or whatever color you want
+        g.strokePath(waveform, juce::PathStrokeType(2.0f));
+        return;
+    }
+
+
+    // Real audio waveform
     for (int i = 0; i < numSamples; ++i)
     {
         float x = static_cast<float>(i) / numSamples * width;

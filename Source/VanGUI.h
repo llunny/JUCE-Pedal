@@ -22,13 +22,15 @@
  */
 
 class SmartPedalAudioProcessor;
- 
+
 
 
 class VanGUI : public juce::Component, private juce::Timer
 {
 public:
-    VanGUI();
+    
+    explicit VanGUI(SmartPedalAudioProcessor&);
+
     ~VanGUI() override;
 
     // Called after construction to set up child components (sliders, buttons, etc.)
@@ -52,8 +54,7 @@ private:
 
     juce::AudioBuffer<float> fakeBuffer;
     juce::int64 lastUpdateTime = 0;
-    
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VanGUI)
 };
-

@@ -26,6 +26,28 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor(SmartPedalAudioPr
     Distortion.setClickingTogglesState(true);
     Distortion.addListener(this);
     
+    
+    addAndMakeVisible(placeholder1);
+    placeholder1.setButtonText("placeholder1");
+    placeholder1.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+    placeholder1.setClickingTogglesState(true);
+    placeholder1.addListener(this);
+    
+    
+    
+    addAndMakeVisible(placeholder2);
+    placeholder2.setButtonText("placeholder2");
+    placeholder2.setColour(juce::TextButton::buttonColourId,juce::Colours::red);
+    placeholder2.setClickingTogglesState(true);
+    placeholder2.addListener(this);
+    
+    
+    addAndMakeVisible(placeholder3);
+    placeholder3.setButtonText("placeholder3");
+    placeholder3.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+    placeholder3.setClickingTogglesState(true);
+    placeholder3.addListener(this);
+    
     vanGUI.initialize();
     
 
@@ -68,6 +90,55 @@ void SmartPedalAudioProcessorEditor::buttonClicked(juce::Button* button)
            
         }
     }
+    
+    else if(button == &placeholder1){
+        bool isOn = button->getToggleState();
+        if(isOn){
+            
+            button->setColour(juce::TextButton::buttonOnColourId,juce::Colours::green);
+            
+           
+        }
+        else{
+            button->setColour(juce::TextButton::buttonColourId,juce::Colours::red);
+            
+            
+            
+           
+        }
+    }
+    else if(button == &placeholder2){
+        bool isOn = button->getToggleState();
+        if(isOn){
+            
+            button->setColour(juce::TextButton::buttonOnColourId,juce::Colours::green);
+            
+           
+        }
+        else{
+            button->setColour(juce::TextButton::buttonColourId,juce::Colours::red);
+            
+            
+            
+           
+        }
+    }
+    else if(button == &placeholder3){
+        bool isOn = button->getToggleState();
+        if(isOn){
+            
+            button->setColour(juce::TextButton::buttonOnColourId,juce::Colours::green);
+            
+           
+        }
+        else{
+            button->setColour(juce::TextButton::buttonColourId,juce::Colours::red);
+            
+            
+            
+           
+        }
+    }
 }
 
 void SmartPedalAudioProcessorEditor::resized()
@@ -75,10 +146,17 @@ void SmartPedalAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
     auto area = getLocalBounds();
-    auto guiArea = area.removeFromLeft(area.getWidth() * 0.75f);
+    auto guiArea = area.removeFromTop(area.getHeight() * 0.75f);
+    vanGUI.setBounds(guiArea);
         
-        vanGUI.setBounds(guiArea);
-        Distortion.setBounds(area);
+    auto buttonArea = area;
+    int buttonWidth = buttonArea.getWidth() / 4;
+    int buttonHeight = buttonArea.getHeight();
+
+    Distortion.setBounds(buttonArea.removeFromLeft(buttonWidth));
+    placeholder1.setBounds(buttonArea.removeFromLeft(buttonWidth));
+    placeholder2.setBounds(buttonArea.removeFromLeft(buttonWidth));
+    placeholder3.setBounds(buttonArea);
 
     // vanGUI.setBounds(getLocalBounds().reduced(10));
 

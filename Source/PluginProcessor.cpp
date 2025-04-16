@@ -145,6 +145,8 @@ bool SmartPedalAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts
 
 void SmartPedalAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+    if (distortionEnabled)
+        distortion.process(buffer);
 
     scopeCollector.processBlock(buffer);
 
@@ -163,7 +165,7 @@ void SmartPedalAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, ju
         buffer.clear(i, 0, buffer.getNumSamples());
 
     // Call effects processing for buffer
-    soniaEffects.process(buffer);
+//    soniaEffects.process(buffer);
 
     auto* readPtr = buffer.getReadPointer(0);
     int numSamples = buffer.getNumSamples();

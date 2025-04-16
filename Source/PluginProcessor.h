@@ -12,6 +12,7 @@
 
 #include "SoniaEffects.h"
 #include "ScopeDataCollector.h"
+#include "Distortion.h"
 
 
 //==============================================================================
@@ -25,6 +26,11 @@ public:
     ~SmartPedalAudioProcessor() override;
 
     const juce::AudioBuffer<float>& getScopeBuffer();
+    
+    
+    void setDistortionEnabled(bool enabled);
+    bool isDistortionEnabled() const { return distortionEnabled; }
+    
 
 
     //==============================================================================
@@ -66,10 +72,14 @@ private:
     //==============================================================================
 
     // An instance of Sonia's placeholder effects class
-    SoniaEffects soniaEffects;
-
+//    SoniaEffects soniaEffects;
+    Distortion distortion;
+    
     juce::AudioBuffer<float> scopeBuffer;
     juce::AudioBuffer<float> scopeSnapshot;
+    
+    bool distortionEnabled = false;
+
 
     std::mutex scopeMutex;
 

@@ -59,6 +59,10 @@ void VanGUI::paint(juce::Graphics& g)
         float y = juce::jmap(samples[i], -1.0f, 1.0f, static_cast<float>(height), 0.0f);
         waveform.lineTo(x, y);
     }
+    
+    
+    
+    
 
     g.strokePath(waveform, juce::PathStrokeType(2.0f));
 }

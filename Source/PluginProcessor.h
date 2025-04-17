@@ -14,6 +14,11 @@
 #include "ScopeDataCollector.h"
 #include "Distortion.h"
 
+#include "Overdrive.h"
+#include "Harmony.h"
+#include "Reverb.h"
+
+
 
 //==============================================================================
 /**
@@ -74,6 +79,9 @@ private:
     // An instance of Sonia's placeholder effects class
 //    SoniaEffects soniaEffects;
     Distortion distortion;
+    Overdrive overdrive;
+    Harmony harmony;
+    Reverb reverb;
     
     juce::AudioBuffer<float> scopeBuffer;
     juce::AudioBuffer<float> scopeSnapshot;

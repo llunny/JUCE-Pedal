@@ -145,8 +145,17 @@ bool SmartPedalAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts
 
 void SmartPedalAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    if (distortionEnabled)
+    if(distortionEnabled)
         distortion.process(buffer);
+
+    if(ReverberationEnabled)
+        reverberation.process(buffer);
+
+    if(HarmonyEnabled)
+      reverberation.process(buffer);
+
+    if(OverdriveEnabled)
+      overdrive.process(buffer);
 
     scopeCollector.processBlock(buffer);
 

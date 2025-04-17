@@ -43,9 +43,9 @@ private:
     // adds Distortion Button
     juce::TextButton Distortion;
     
-    juce::TextButton placeholder1;
-    juce::TextButton placeholder2;
-    juce::TextButton placeholder3;
+    juce::TextButton Reverberation;
+    juce::TextButton Overdrive;
+    juce::TextButton Harmony;
 
     VanGUI vanGUI;
 

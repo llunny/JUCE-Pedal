@@ -27,26 +27,26 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor(SmartPedalAudioPr
     Distortion.addListener(this);
     
     
-    addAndMakeVisible(placeholder1);
-    placeholder1.setButtonText("placeholder1");
-    placeholder1.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
-    placeholder1.setClickingTogglesState(true);
-    placeholder1.addListener(this);
+    addAndMakeVisible(Reverberation);
+    Reverberation.setButtonText("Reverberation");
+    Reverberation.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+    Reverberation.setClickingTogglesState(true);
+    Reverberation.addListener(this);
     
     
     
-    addAndMakeVisible(placeholder2);
-    placeholder2.setButtonText("placeholder2");
-    placeholder2.setColour(juce::TextButton::buttonColourId,juce::Colours::red);
-    placeholder2.setClickingTogglesState(true);
-    placeholder2.addListener(this);
+    addAndMakeVisible(Harmony);
+    Harmony.setButtonText("Harmony");
+    Harmony.setColour(juce::TextButton::buttonColourId,juce::Colours::red);
+    Harmony.setClickingTogglesState(true);
+    Harmony.addListener(this);
     
     
-    addAndMakeVisible(placeholder3);
-    placeholder3.setButtonText("placeholder3");
-    placeholder3.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
-    placeholder3.setClickingTogglesState(true);
-    placeholder3.addListener(this);
+    addAndMakeVisible(Overdrive);
+    Overdrive.setButtonText("Overdrive");
+    Overdrive.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+    Overdrive.setClickingTogglesState(true);
+    Overdrive.addListener(this);
     
     vanGUI.initialize();
     
@@ -91,7 +91,7 @@ void SmartPedalAudioProcessorEditor::buttonClicked(juce::Button* button)
         }
     }
     
-    else if(button == &placeholder1){
+    else if(button == &Reverberation){
         bool isOn = button->getToggleState();
         if(isOn){
             
@@ -107,7 +107,7 @@ void SmartPedalAudioProcessorEditor::buttonClicked(juce::Button* button)
            
         }
     }
-    else if(button == &placeholder2){
+    else if(button == &Harmony){
         bool isOn = button->getToggleState();
         if(isOn){
             
@@ -123,7 +123,7 @@ void SmartPedalAudioProcessorEditor::buttonClicked(juce::Button* button)
            
         }
     }
-    else if(button == &placeholder3){
+    else if(button == &Overdrive){
         bool isOn = button->getToggleState();
         if(isOn){
             
@@ -154,9 +154,9 @@ void SmartPedalAudioProcessorEditor::resized()
     int buttonHeight = buttonArea.getHeight();
 
     Distortion.setBounds(buttonArea.removeFromLeft(buttonWidth));
-    placeholder1.setBounds(buttonArea.removeFromLeft(buttonWidth));
-    placeholder2.setBounds(buttonArea.removeFromLeft(buttonWidth));
-    placeholder3.setBounds(buttonArea);
+    Reverberation.setBounds(buttonArea.removeFromLeft(buttonWidth));
+    Harmony.setBounds(buttonArea.removeFromLeft(buttonWidth));
+    Overdrive.setBounds(buttonArea);
 
     // vanGUI.setBounds(getLocalBounds().reduced(10));
 

@@ -97,12 +97,13 @@ void SmartPedalAudioProcessorEditor::buttonClicked(juce::Button* button)
             
             button->setColour(juce::TextButton::buttonOnColourId,juce::Colours::green);
             
-           
+            audioProcessor.setReverberationEnabled(isOn);
         }
         else{
             button->setColour(juce::TextButton::buttonColourId,juce::Colours::red);
             
-            
+                        audioProcessor.setReverberationEnabled(false);
+
             
            
         }
@@ -112,12 +113,15 @@ void SmartPedalAudioProcessorEditor::buttonClicked(juce::Button* button)
         if(isOn){
             
             button->setColour(juce::TextButton::buttonOnColourId,juce::Colours::green);
-            
+
+          audioProcessor.setHarmonyEnabled(isOn);
            
         }
         else{
             button->setColour(juce::TextButton::buttonColourId,juce::Colours::red);
-            
+
+
+            audioProcessor.setHarmonyEnabled(false);
             
             
            
@@ -128,12 +132,16 @@ void SmartPedalAudioProcessorEditor::buttonClicked(juce::Button* button)
         if(isOn){
             
             button->setColour(juce::TextButton::buttonOnColourId,juce::Colours::green);
-            
+
+
+            audioProcessor.setOverdriveEnabled(isOn);
            
         }
         else{
             button->setColour(juce::TextButton::buttonColourId,juce::Colours::red);
-            
+
+
+            audioProcessor.setOverdriveEnabled(false);
             
             
            

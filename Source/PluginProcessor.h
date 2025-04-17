@@ -18,6 +18,7 @@
 #include "Overdrive.h"
 #include "Harmony.h"
 #include "Reverb.h"
+#include "Autotune.h"
 
 
 
@@ -89,7 +90,7 @@ private:
 
     // An instance of Sonia's placeholder effects class
 //    SoniaEffects soniaEffects;
-    Distortion distortion;
+    Autotune autotune;
     Overdrive overdrive;
     Harmony harmony;
     Reverb reverb;

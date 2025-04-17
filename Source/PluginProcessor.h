@@ -1,3 +1,4 @@
+
 /*
   ==============================================================================
 
@@ -35,7 +36,17 @@ public:
     
     void setDistortionEnabled(bool enabled);
     bool isDistortionEnabled() const { return distortionEnabled; }
-    
+
+
+    void setReverberationEnabled(bool enabled_1);
+    bool isReverberationEnabled() const { return ReverberationEnabled; }
+
+
+    void setHarmonyEnabled(bool enabled_2);
+    bool isHarmonyEnabled() const {return HarmonyEnabled; }
+
+    void setOverdriveEnabled(bool enabled_3);
+    bool isOverdriveEnabled() const { return OverdriveEnabled; }
 
 
     //==============================================================================
@@ -87,6 +98,12 @@ private:
     juce::AudioBuffer<float> scopeSnapshot;
     
     bool distortionEnabled = false;
+    bool ReverberationEnabled = false;
+    bool HarmonyEnabled = false;
+    bool OverdriveEnabled = false;
+    
+
+
 
 
     std::mutex scopeMutex;

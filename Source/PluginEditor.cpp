@@ -21,7 +21,7 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor(SmartPedalAudioPr
     
     
     addAndMakeVisible(Distortion);
-    Distortion.setButtonText("Distortion");
+    Distortion.setButtonText("Autotune");
     Distortion.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
     Distortion.setClickingTogglesState(true);
     Distortion.addListener(this);

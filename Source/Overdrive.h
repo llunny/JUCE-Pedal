@@ -10,9 +10,9 @@ class Overdrive
 {
 public:
     Overdrive(float baseDrive = 1.0f,
-            float maxDrive = 10.0f,
-            float energySensitivity = 5.0f,
-            float dryWetMix = 0.7f);
+        float maxDrive = 10.0f,
+        float energySensitivity = 5.0f,
+        float dryWetMix = 0.7f);
     ~Overdrive();
 
     void setDryWetMix(float mix);

@@ -33,8 +33,8 @@ public:
     ~SmartPedalAudioProcessor() override;
 
     const juce::AudioBuffer<float>& getScopeBuffer();
-    
-    
+
+
     void setDistortionEnabled(bool enabled);
     bool isDistortionEnabled() const { return distortionEnabled; }
 
@@ -44,7 +44,7 @@ public:
 
 
     void setHarmonyEnabled(bool enabled_2);
-    bool isHarmonyEnabled() const {return HarmonyEnabled; }
+    bool isHarmonyEnabled() const { return HarmonyEnabled; }
 
     void setOverdriveEnabled(bool enabled_3);
     bool isOverdriveEnabled() const { return OverdriveEnabled; }
@@ -90,19 +90,19 @@ private:
 
     // An instance of Sonia's placeholder effects class
 //    SoniaEffects soniaEffects;
-    Autotune autotune;
+    AutoTune autotune;
     Overdrive overdrive;
     Harmony harmony;
     Reverb reverb;
-    
+
     juce::AudioBuffer<float> scopeBuffer;
     juce::AudioBuffer<float> scopeSnapshot;
-    
+
     bool distortionEnabled = false;
     bool ReverberationEnabled = false;
     bool HarmonyEnabled = false;
     bool OverdriveEnabled = false;
-    
+
 
 
 

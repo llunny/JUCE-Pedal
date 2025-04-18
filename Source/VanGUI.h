@@ -28,7 +28,7 @@ class SmartPedalAudioProcessor;
 class VanGUI : public juce::Component, private juce::Timer
 {
 public:
-    
+
     explicit VanGUI(SmartPedalAudioProcessor&);
 
     ~VanGUI() override;

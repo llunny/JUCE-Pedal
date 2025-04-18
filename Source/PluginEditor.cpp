@@ -18,38 +18,38 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor(SmartPedalAudioPr
     // editor's size to whatever you need it to be.
 
     addAndMakeVisible(vanGUI);
-    
-    
+
+
     addAndMakeVisible(Distortion);
     Distortion.setButtonText("Autotune");
     Distortion.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
     Distortion.setClickingTogglesState(true);
     Distortion.addListener(this);
-    
-    
+
+
     addAndMakeVisible(Reverberation);
     Reverberation.setButtonText("Reverberation");
     Reverberation.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
     Reverberation.setClickingTogglesState(true);
     Reverberation.addListener(this);
-    
-    
-    
+
+
+
     addAndMakeVisible(Harmony);
     Harmony.setButtonText("Harmony");
-    Harmony.setColour(juce::TextButton::buttonColourId,juce::Colours::red);
+    Harmony.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
     Harmony.setClickingTogglesState(true);
     Harmony.addListener(this);
-    
-    
+
+
     addAndMakeVisible(Overdrive);
     Overdrive.setButtonText("Overdrive");
     Overdrive.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
     Overdrive.setClickingTogglesState(true);
     Overdrive.addListener(this);
-    
+
     vanGUI.initialize();
-    
+
 
     setSize(400, 300);
 }
@@ -74,77 +74,77 @@ void SmartPedalAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
     if (button == &Distortion)
     {
-        
+
         bool isOn = button->getToggleState();
-        if(isOn){
-            
-            button->setColour(juce::TextButton::buttonOnColourId,juce::Colours::green);
-            
+        if (isOn) {
+
+            button->setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+
             audioProcessor.setDistortionEnabled(isOn);
         }
-        else{
-            button->setColour(juce::TextButton::buttonColourId,juce::Colours::red);
-            
+        else {
+            button->setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+
             audioProcessor.setDistortionEnabled(false);
-            
-           
+
+
         }
     }
-    
-    else if(button == &Reverberation){
+
+    else if (button == &Reverberation) {
         bool isOn = button->getToggleState();
-        if(isOn){
-            
-            button->setColour(juce::TextButton::buttonOnColourId,juce::Colours::green);
-            
+        if (isOn) {
+
+            button->setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+
             audioProcessor.setReverberationEnabled(isOn);
         }
-        else{
-            button->setColour(juce::TextButton::buttonColourId,juce::Colours::red);
-            
-                        audioProcessor.setReverberationEnabled(false);
+        else {
+            button->setColour(juce::TextButton::buttonColourId, juce::Colours::red);
 
-            
-           
+            audioProcessor.setReverberationEnabled(false);
+
+
+
         }
     }
-    else if(button == &Harmony){
+    else if (button == &Harmony) {
         bool isOn = button->getToggleState();
-        if(isOn){
-            
-            button->setColour(juce::TextButton::buttonOnColourId,juce::Colours::green);
+        if (isOn) {
 
-          audioProcessor.setHarmonyEnabled(isOn);
-           
+            button->setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+
+            audioProcessor.setHarmonyEnabled(isOn);
+
         }
-        else{
-            button->setColour(juce::TextButton::buttonColourId,juce::Colours::red);
+        else {
+            button->setColour(juce::TextButton::buttonColourId, juce::Colours::red);
 
 
             audioProcessor.setHarmonyEnabled(false);
-            
-            
-           
+
+
+
         }
     }
-    else if(button == &Overdrive){
+    else if (button == &Overdrive) {
         bool isOn = button->getToggleState();
-        if(isOn){
-            
-            button->setColour(juce::TextButton::buttonOnColourId,juce::Colours::green);
+        if (isOn) {
+
+            button->setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
 
 
             audioProcessor.setOverdriveEnabled(isOn);
-           
+
         }
-        else{
-            button->setColour(juce::TextButton::buttonColourId,juce::Colours::red);
+        else {
+            button->setColour(juce::TextButton::buttonColourId, juce::Colours::red);
 
 
             audioProcessor.setOverdriveEnabled(false);
-            
-            
-           
+
+
+
         }
     }
 }
@@ -156,7 +156,7 @@ void SmartPedalAudioProcessorEditor::resized()
     auto area = getLocalBounds();
     auto guiArea = area.removeFromTop(area.getHeight() * 0.75f);
     vanGUI.setBounds(guiArea);
-        
+
     auto buttonArea = area;
     int buttonWidth = buttonArea.getWidth() / 4;
     int buttonHeight = buttonArea.getHeight();

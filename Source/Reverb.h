@@ -11,10 +11,10 @@ class Reverb
 {
 public:
     Reverb(int bufferLength = 48000,
-                float normalDecay = 0.98f,
-                float fastDecay = 0.5f,
-                float noteOnThreshold = 0.1f,
-                float reverbMix = 0.4f);
+        float normalDecay = 0.98f,
+        float fastDecay = 0.5f,
+        float noteOnThreshold = 0.1f,
+        float reverbMix = 0.4f);
     ~Reverb();
 
     void setReverbMix(float mix);

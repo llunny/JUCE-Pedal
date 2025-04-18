@@ -20,9 +20,13 @@ SmartPedalAudioProcessor::SmartPedalAudioProcessor()
         .withOutput("Output", juce::AudioChannelSet::stereo(), true)
 #endif
     )
+    , autotune("C Major")         // <— call the AutoTune(String,float) ctor
+    , harmony("C Major", 0.5f)   // <— call the Harmony(String,float) ctor
 #endif
 {
+    // … the rest of your setup …
 }
+
 
 
 const juce::AudioBuffer<float>& SmartPedalAudioProcessor::getScopeBuffer()
@@ -35,6 +39,11 @@ const juce::AudioBuffer<float>& SmartPedalAudioProcessor::getScopeBuffer()
 SmartPedalAudioProcessor::~SmartPedalAudioProcessor()
 {
 }
+
+void SmartPedalAudioProcessor::setDistortionEnabled(bool e) { distortionEnabled = e; }
+void SmartPedalAudioProcessor::setReverberationEnabled(bool e) { ReverberationEnabled = e; }
+void SmartPedalAudioProcessor::setHarmonyEnabled(bool e) { HarmonyEnabled = e; }
+void SmartPedalAudioProcessor::setOverdriveEnabled(bool e) { OverdriveEnabled = e; }
 
 //==============================================================================
 const juce::String SmartPedalAudioProcessor::getName() const
@@ -145,17 +154,17 @@ bool SmartPedalAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts
 
 void SmartPedalAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    if(distortionEnabled)
+    if (distortionEnabled)
         autotune.process(buffer);
 
-    if(ReverberationEnabled)
-        reverberation.process(buffer);
+    if (ReverberationEnabled)
+        reverb.process(buffer);
 
-    if(HarmonyEnabled)
-      reverberation.process(buffer);
+    if (HarmonyEnabled)
+        harmony.process(buffer);
 
-    if(OverdriveEnabled)
-      overdrive.process(buffer);
+    if (OverdriveEnabled)
+        overdrive.process(buffer);
 
     scopeCollector.processBlock(buffer);
 

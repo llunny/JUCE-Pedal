@@ -1,38 +1,40 @@
-// Harmony.h
-#pragma once
+// Overdrive.cpp
+#include "Overdrive.h"
+#include <cmath>
 
-#include <JuceHeader.h>
-#include <vector>
-#include <juce_dsp/juce_dsp.h>   // or your custom PitchShifter shim
-
-#include "PitchShifter.h"
-
-
-class Harmony
+Overdrive::Overdrive(float baseDrive_, float maxDrive_, float energySens_, float dryWetMix_)
+    : baseDrive(baseDrive_), maxDrive(maxDrive_), energySensitivity(energySens_), dryWetMix(dryWetMix_)
 {
-public:
-    Harmony(const juce::String& keySignature, float dryWetMix = 0.5f);
-    ~Harmony() = default;
+}
 
-    /** Call from prepareToPlay() */
-    void prepare(double sampleRate, juce::uint32 maxBlockSize, juce::uint32 numChannels);
+Overdrive::~Overdrive() {}
 
-    void setDryWetMix(float mix);
-    float getDryWetMix() const;
+void Overdrive::setDryWetMix(float mix) { dryWetMix = mix; }
+float Overdrive::getDryWetMix() const { return dryWetMix; }
 
-    /** Call from processBlock() */
-    void process(juce::AudioBuffer<float>& buffer);
+float Overdrive::computeRMS(const float* data, int numSamples)
+{
+    double sum = 0.0;
+    for (int i = 0; i < numSamples; ++i)
+        sum += data[i] * data[i];
+    return std::sqrt(sum / numSamples);
+}
 
-private:
-    float dryWetMix;
+void Overdrive::process(juce::AudioBuffer<float>& buffer)
+{
+    int numSamples = buffer.getNumSamples();
+    for (int channel = 0; channel < buffer.getNumChannels(); ++channel)
+    {
+        auto* data = buffer.getWritePointer(channel);
+        float energy = computeRMS(data, numSamples);
+        float drive = baseDrive + energy * energySensitivity;
+        if (drive > maxDrive) drive = maxDrive;
 
-    double       currentSampleRate{ 44100.0 };
-    juce::uint32 currentMaxBlockSize{ 512 };
-    juce::uint32 currentNumChannels{ 2 };
-
-    std::vector<float>             scaleFrequencies;
-    juce::dsp::PitchShifter<float> pitchShifter;
-
-    void generateNotesFromKey(const juce::String& keySignature);
-    float detectPitch(const float* channelData, int numSamples, double sampleRate);
-};
+        for (int i = 0; i < numSamples; ++i)
+        {
+            float x = data[i];
+            float sat = std::tanh(drive * x);
+            data[i] = dryWetMix * sat + (1.0f - dryWetMix) * x;
+        }
+    }
+}
